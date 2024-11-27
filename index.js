@@ -142,7 +142,7 @@ app.post('/users/:id/:favorites', (req, res) => {
 }    
 });
 
-// allow user to remove a movie from their list of favorites -- broken
+// allow user to remove a movie from their list of favorites //
 
 app.delete('/users/:id/:favorites', (req, res) => {
     const id = req.params.id;
@@ -158,7 +158,7 @@ app.delete('/users/:id/:favorites', (req, res) => {
 }
 });
 
-//allow user to deregister from --broken
+//allow user to deregister //
 
 app.delete('/users/:id', (req, res) => {
     const id = req.params.id;
