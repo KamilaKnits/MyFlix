@@ -1,13 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Documentation</title>
+    <title>MyFlix Documentation</title>
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 15px;
+        }
+    </style>
 </head>
+
 <body>
-    <h1>MyFlix</h1>
-    <h3>This application delivers information about various movies, directors, and genres. Users can sign up, update their contact details, and build a personalized list of favorite movies.
-    </h3>
+    <section>
+        <h1>MyFlix Documentation</h1>
+        <h4>This application delivers information about various movies, directors, and genres. Users can sign up, update
+            their contact details, and build a personalized list of favorite movies.
+        </h4>
+    </section>
+
+    <section>
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Request</th>
+                        <th>URL</th>
+                        <th>HTTP Method</th>
+                        <th>Request Body Data Format</th>
+                        <th>Response Body Datat Format</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Get a list of all movies</td>
+                        <td>/movies</td>
+                        <td>GET</td>
+                        <td>none</td>
+                        <td>A JSON object showing data of all movies</td>
+                    </tr>
+                    <tr>
+                        <td>Get data about a single movie by title</td>
+                        <td>/movies/[title]</td>
+                        <td>GET</td>
+                        <td>none</td>
+                        <td>A JSON object data about a single movie containing the description, genre, director, image
+                            URL. Example:
+                            <pre>
+                            {
+                                title:'Death Becomes Her',
+                                Description: '',
+                                Genre: 'Comedy, Fantasy'
+                                Director: 'Robert Zemeckis',
+                                Image: ''
+                            },
+                            </pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Get data about a genre</td>
+                        <td>/movies/genres/[genre]</td>
+                        <td>GET</td>
+                        <td>none</td>
+                        <td>A JSON object showing the details of a genre. Example:
+                            <pre>
+                            {
+                                genre: 'Comedy',
+                                description: ''
+                                
+                            },
+                            </pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Get data about a director by name</td>
+                        <td>/movies/directors/[director]</td>
+                        <td>GET</td>
+                        <td>none</td>
+                        <td>A JSON object showing data of director containing bio, birth year. Example:
+                            <pre>
+                            {
+                                director: 'Robert Zemeckis',
+                                bio:'',
+                                birth year: ''
+                            },
+                        </pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Allow a new user to register</td>
+                        <td>/users</td>
+                        <td>POST</td>
+                        <td>A JSON object showing data about the new user.
+                            <pre>
+                            {
+                                name: '',
+                                username: ''
+                            },
+                        </pre>
+                        </td>
+                        <td>A JSON object showing their information. Example:
+                            <pre>
+                                {
+                                    name: '',
+                                    username: ''
+                                    id: ''
+                                },
+                            </pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Allow users to update their user info (username)</td>
+                        <td>/users/[id]</td>
+                        <td>PUT</td>
+                        <td>A JSON object with the date to be updated.
+                            <pre>
+                            {
+                                username: ''
+                            },
+                        </pre>
+                        </td>
+                        <td>A message indicating that the username was updated sucessfully or an error message if not.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Allow users to add a movie to their list of favorites</td>
+                        <td>/users/[id]/[favorites]</td>
+                        <td>POST</td>
+                        <td>A JSON object with the movie to be added.
+                            <pre>
+                                {
+                                    title:'Death Becomes Her',
+                                },
+                            </pre>
+                        </td>
+                        <td>A message indicating that the movie was added sucessfully or an error message if not.</td>
+                    </tr>
+                    <tr>
+                        <td>Allow users to remove a movie from their list of favorites</td>
+                        <td>/users/[id]/[favorites]</td>
+                        <td>DELETE</td>
+                        <td>none</td>
+                        <td>A message indicating that the movie has been removed from favorites successfully or an error
+                            message if not.</td>
+                    </tr>
+                    <tr>
+                        <td>Allow existing users to deregister</td>
+                        <td>/users/[id]</td>
+                        <td>DELETE</td>
+                        <td>a JSON object containing the user to be removed.
+                            <pre>
+                                {
+                                    name: ''
+                                    username: ''
+                                },
+                            </pre>
+                        </td>
+                        <td>A message indicating that username has been removed or an error message if not.</td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+
 </body>
+
 </html>
