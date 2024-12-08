@@ -68,7 +68,7 @@
                     </tr>
                     <tr>
                         <td>Get data about a genre</td>
-                        <td>/movies/genres/[genre]</td>
+                        <td>/movies/genre/[genre]</td>
                         <td>GET</td>
                         <td>none</td>
                         <td>A JSON object showing the details of a genre. Example:
@@ -97,6 +97,36 @@
                         </td>
                     </tr>
                     <tr>
+                        <td>Get a list of all users</td>
+                        <td>/users</td>
+                        <td>GET</td>
+                        <td>none</td>
+                        <td>A JSON object showing their information. Example:
+                            <pre>
+                                {
+                                    name: '',
+                                    username: ''
+                                    id: ''
+                                },
+                            </pre>
+                        </td>
+                    </tr>
+                    <tr>
+                            <td>Get a user by username</td>
+                            <td>/users/[username]</td>
+                            <td>GET</td>
+                            <td>none</td>
+                            <td>A JSON object showing their information. Example:
+                                <pre>
+                                    {
+                                        name: '',
+                                        username: ''
+                                        id: ''
+                                    },
+                                </pre>
+                            </td>
+                        </tr>
+                    <tr>
                         <td>Allow a new user to register</td>
                         <td>/users</td>
                         <td>POST</td>
@@ -120,7 +150,7 @@
                     </tr>
                     <tr>
                         <td>Allow users to update their user info (username)</td>
-                        <td>/users/[id]</td>
+                        <td>/users/[username]</td>
                         <td>PUT</td>
                         <td>A JSON object with the date to be updated.
                             <pre>
@@ -134,7 +164,7 @@
                     </tr>
                     <tr>
                         <td>Allow users to add a movie to their list of favorites</td>
-                        <td>/users/[id]/[favorites]</td>
+                        <td>/users/[username]/movies/[movieID]</td>
                         <td>POST</td>
                         <td>A JSON object with the movie to be added.
                             <pre>
@@ -147,7 +177,7 @@
                     </tr>
                     <tr>
                         <td>Allow users to remove a movie from their list of favorites</td>
-                        <td>/users/[id]/[favorites]</td>
+                        <td>/users/[username]/movies/[movieID]</td>
                         <td>DELETE</td>
                         <td>none</td>
                         <td>A message indicating that the movie has been removed from favorites successfully or an error
@@ -155,7 +185,7 @@
                     </tr>
                     <tr>
                         <td>Allow existing users to deregister</td>
-                        <td>/users/[id]</td>
+                        <td>/users/[username]</td>
                         <td>DELETE</td>
                         <td>a JSON object containing the user to be removed.
                             <pre>
