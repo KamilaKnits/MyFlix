@@ -11,6 +11,8 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), { 
 const mongoose = require('mongoose');
 const Models = require('./models.js');
 
+const { check, validationResult } = require('express-validator');
+
 const Movies = Models.Movie;
 const Users = Models.User;
 
@@ -203,6 +205,9 @@ app.use(morgan('combined', { stream: accessLogStream }));
 app.use(express.static('public'));
 app.use(express.json());
 
+const cors = require('cors');
+app.use(cors());
+
 let auth = require('./auth')(app);
 
 const passport = require('passport');
@@ -305,34 +310,53 @@ app.get('/movies/directors/:director', passport.authenticate('jwt', { session: f
     Birthday: Date
 }*/
 
-app.post('/users', async (req, res) => {
-    await Users.findOne({ Username: req.body.Username })
-        .then((user) => {
-            if (user) {
-                return res.status(400).send(req.body.Username + 'already exists');
-            } else {
-                Users
-                    .create({
-                        Username: req.body.Username,
-                        Password: req.body.Password,
-                        Email: req.body.Email,
-                        Birthday: req.body.Birthday
-                    })
-                    .then((user) => { res.send(201).json(user) })
-                    .catch((error) => {
-                        console.error(error);
-                        res.status(500).send('Error: ' + error);
-                    })
-            }
-        })
-        .catch((error) => {
-            console.error(error);
-            res.status(500).send('Error: ' + error);
-        });
-});
+app.post('/users',
+    //validation logic here for request
+    //you can either use a chain of methods like .not().isEmpty() or use .isLength({min: 5})
+    //which means minimum of 5 characters allowed only
+    [
+        check('Username', 'Username is required').isLength({ min: 5 }),
+        check('Username', 'Username contains on alphanumeric characters - not allowed').isAlphanumeric(),
+        check('Password', 'Password is required').not().isEmpty(),
+        check('Email', 'Email does not appear to be valid').isEmail()
+    ], async (req, res) => {
+
+        //check for validation errors
+        let errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(422).json({ errors: errors.array() });
+        }
+
+        let hashedPassword = Users.hashPassword(req.body.Password);
+
+        await Users.findOne({ Username: req.body.Username })//search to see if a user with requested username already exists
+            .then((user) => {
+                if (user) {
+                    //if the user is found, sned a response that it already exists
+                    return res.status(400).send(req.body.Username + 'already exists');
+                } else {
+                    Users
+                        .create({
+                            Username: req.body.Username,
+                            Password: hashedPassword,
+                            Email: req.body.Email,
+                            Birthday: req.body.Birthday
+                        })
+                        .then((user) => { res.send(201).json(user) })
+                        .catch((error) => {
+                            console.error(error);
+                            res.status(500).send('Error: ' + error);
+                        })
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+                res.status(500).send('Error: ' + error);
+            });
+    });
 
 
-// allow a user to update their info by username//
+// allow a user to update their info by username// might need to add validation point just like in add new user
 /* expect a json in this format
 {
     Username: String, (required)
@@ -342,8 +366,21 @@ app.post('/users', async (req, res) => {
 }
 */
 
-app.put('/users/:Username', passport.authenticate('jwt', { session: false }),
+app.put('/users/:Username',
+    [
+        check('Username', 'Username is required').isLength({ min: 5 }),
+        check('Username', 'Username contains on alphanumeric characters - not allowed').isAlphanumeric(),
+        check('Password', 'Password is required').not().isEmpty(),
+        check('Email', 'Email does not appear to be valid').isEmail()
+    ],
+    passport.authenticate('jwt', { session: false }),
     async (req, res) => {
+            //check for validation errors
+        let errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(422).json({ errors: errors.array() });
+        }
+
         //condition to check added here
         if (req.user.Username !== req.params.Username) {
             return res.status(400).send('Permission denied');
@@ -452,7 +489,13 @@ app.use((err, req, res, next) => {
     res.status(500).send('Something broke!');
 });
 
-app.listen(8080, () => {
-    console.log('Your app is listening on port 8080.');
+const port = process.env.PORT || 8080;
+app.listen(port, '0.0.0.0', () => {
+    console.log('Listening on Port ' + port);
 });
+
+
+// app.listen(8080, () => {
+//     console.log('Your app is listening on port 8080.');
+// });
 
