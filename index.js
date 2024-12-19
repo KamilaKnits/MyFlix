@@ -31,7 +31,7 @@ app.use(express.json());
 const allowedOrigins = ['http://localhost:8080', 'https://mymovieflix-a3c1af20a30e.herokuapp.com/'];
 app.use(cors({
     origin: (origin, callback) => {
-        if(!origin) return callnack(null, true);
+        if(!origin) return callback(null, true);
         if(allowedOrigins.indexOf(origin) === -1){//if a specific origin isn't found on the list of allowed origins
             let message = 'The CORS policy for this application does not allow access from origin ' + origin;
             return callback(new Error(message), false) ; 
