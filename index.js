@@ -40,6 +40,10 @@ app.use(cors({
     }
 }));
 
+app.get('/', (req, res) => {
+    response('Welcome to the MyLFlix!')
+});
+
 // get list of all movies//
 
 app.get('/movies', passport.authenticate('jwt', { session: false }),
