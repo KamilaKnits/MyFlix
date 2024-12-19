@@ -41,7 +41,7 @@ app.use(cors({
 }));
 
 app.get('/', (req, res) => {
-    response('Welcome to the MyLFlix!')
+    res.send('Welcome to the MyFlix!')
 });
 
 // get list of all movies//
