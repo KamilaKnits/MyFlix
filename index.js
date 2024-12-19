@@ -2,7 +2,7 @@ const express = require('express'); //import express
 const morgan = require('morgan'); //import morgan 
 const fs = require('fs'); //import built in node modules fs and path
 const path = require('path');
-
+require('./passport');
 const uuid = require('uuid'); //generate unique ID's
 const app = express();
 
@@ -14,9 +14,7 @@ const Movies = Models.Movie;
 const Users = Models.User;
 
 const cors = require('cors');
-let auth = require('./auth')(app);
-const passport = require('passport');
-require('./passport');
+
 
 const mongoose = require('mongoose');
 // mongoose.connect('mongodb://127.0.0.1:27017/cfDB');
@@ -27,6 +25,8 @@ app.use(morgan('combined', { stream: accessLogStream }));
 app.use(express.static('public'));
 app.use(express.json());
 
+let auth = require('./auth')(app);
+const passport = require('passport');
 
 const allowedOrigins = ['http://localhost:8080', 'https://mymovieflix-a3c1af20a30e.herokuapp.com/'];
 app.use(cors({
@@ -41,7 +41,7 @@ app.use(cors({
 }));
 
 app.get('/', (req, res) => {
-    res.send('Welcome to the MyFlix!')
+    res.send('Welcome to the MyFlix!');
 });
 
 // get list of all movies//
