@@ -118,10 +118,12 @@ app.post('/users',
     //which means minimum of 5 characters allowed only
     [
         check('Username', 'Username is required').isLength({ min: 5 }),
-        check('Username', 'Username contains on alphanumeric characters - not allowed').isAlphanumeric(),
+        check('Username', 'Username contains no alphanumeric characters - not allowed').isAlphanumeric(),
         check('Password', 'Password is required').not().isEmpty(),
         check('Email', 'Email does not appear to be valid').isEmail()
-    ], async (req, res) => {
+    ],
+    passport.authenticate('jwt', { session: false }), 
+    async (req, res) => {
 
         //check for validation errors
         let errors = validationResult(req);
