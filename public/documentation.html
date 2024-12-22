@@ -105,7 +105,7 @@
                     </tr>
                     <tr>
                         <td>Allow a new user to register</td>
-                        <td>/users</td>
+                        <td>/login</td>
                         <td>POST</td>
                         <td>A JSON object showing data about the new user.
                             <pre>
@@ -127,7 +127,7 @@
                     </tr>
                     <tr>
                         <td>Allow users to update their user info (username)</td>
-                        <td>/users/[username]</td>
+                        <td>/login/[username]</td>
                         <td>PUT</td>
                         <td>A JSON object with the date to be updated.
                             <pre>
@@ -141,7 +141,7 @@
                     </tr>
                     <tr>
                         <td>Allow users to add a movie to their list of favorites</td>
-                        <td>/users/[username]/movies/[movieID]</td>
+                        <td>/login/[username]/movies/[movieID]</td>
                         <td>POST</td>
                         <td>A JSON object with the movie to be added.
                             <pre>
@@ -154,7 +154,7 @@
                     </tr>
                     <tr>
                         <td>Allow users to remove a movie from their list of favorites</td>
-                        <td>/users/[username]/movies/[movieID]</td>
+                        <td>/login/[username]/movies/[movieID]</td>
                         <td>DELETE</td>
                         <td>none</td>
                         <td>A message indicating that the movie has been removed from favorites successfully or an error
@@ -162,7 +162,7 @@
                     </tr>
                     <tr>
                         <td>Allow existing users to deregister</td>
-                        <td>/users/[username]</td>
+                        <td>/login/[username]</td>
                         <td>DELETE</td>
                         <td>a JSON object containing the user to be removed.
                             <pre>
