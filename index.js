@@ -2,7 +2,6 @@ const express = require('express'); //import express
 const morgan = require('morgan'); //import morgan 
 const fs = require('fs'); //import built in node modules fs and path
 const path = require('path');
-require('./passport');
 const uuid = require('uuid'); //generate unique ID's
 const app = express();
 
@@ -27,6 +26,8 @@ app.use(express.json());
 
 let auth = require('./auth')(app);
 const passport = require('passport');
+require('./passport');
+
 
 const allowedOrigins = ['http://localhost:8080', 'https://mymovieflix-a3c1af20a30e.herokuapp.com/'];
 app.use(cors({
