@@ -112,7 +112,7 @@ app.get('/movies/directors/:director', passport.authenticate('jwt', { session: f
     Birthday: Date
 }*/
 
-app.post('/login',
+app.post('/users',
     //validation logic here for request
     //you can either use a chain of methods like .not().isEmpty() or use .isLength({min: 5})
     //which means minimum of 5 characters allowed only
@@ -170,7 +170,7 @@ app.post('/login',
 }
 */
 
-app.put('/login/:Username',
+app.put('/users/:Username',
     [
         check('Username', 'Username is required').isLength({ min: 5 }),
         check('Username', 'Username contains on alphanumeric characters - not allowed').isAlphanumeric(),
@@ -213,7 +213,7 @@ app.put('/login/:Username',
 
 //add a movie to a user's favorite movies list//
 
-app.post('/login/:Username/movies/:MovieID', passport.authenticate('jwt', { session: false }),
+app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { session: false }),
     async (req, res) => {
         //condition to check added here
         if (req.user.Username !== req.params.Username) {
@@ -259,7 +259,7 @@ app.delete('/login/:Username/movies/:MovieID', passport.authenticate('jwt', { se
 
 //delete user by username//
 
-app.delete('/login/:Username', passport.authenticate('jwt', { session: false }),
+app.delete('/users/:Username', passport.authenticate('jwt', { session: false }),
     async (req, res) => {
         //condition to check added here
         if (req.user.Username !== req.params.Username) {
