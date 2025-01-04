@@ -213,7 +213,7 @@ app.put('/login/:Username',
 
 //add a movie to a user's favorite movies list//
 
-app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { session: false }),
+app.post('/login/:Username/movies/:MovieID', passport.authenticate('jwt', { session: false }),
     async (req, res) => {
         //condition to check added here
         if (req.user.Username !== req.params.Username) {
@@ -259,7 +259,7 @@ app.delete('/login/:Username/movies/:MovieID', passport.authenticate('jwt', { se
 
 //delete user by username//
 
-app.delete('/users/:Username', passport.authenticate('jwt', { session: false }),
+app.delete('/login/:Username', passport.authenticate('jwt', { session: false }),
     async (req, res) => {
         //condition to check added here
         if (req.user.Username !== req.params.Username) {
