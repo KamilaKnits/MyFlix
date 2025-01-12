@@ -80,7 +80,7 @@ app.get('/movies/genre/:genre', passport.authenticate('jwt', { session: false })
     async (req, res) => {
         await Movies.findOne({ "Genre.Name": req.params.genre })
             .then((movie) => {
-                res.json(movie);
+                res.json(movie.Genre);
             })
             .catch((error) => {
                 console.error(error);
@@ -192,6 +192,10 @@ app.put('/users/:Username',
             return res.status(400).send('Permission denied');
         }
         //condition ends
+
+
+        let hashedPassword = Users.hashPassword(req.body.Password);
+
         await Users.findOneAndUpdate({ Username: req.params.Username },
             {
                 $set:
@@ -237,7 +241,7 @@ app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { sess
 
 // allow user to remove a movie from their list of favorites //
 
-app.delete('/login/:Username/movies/:MovieID', passport.authenticate('jwt', { session: false }),
+app.delete('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { session: false }),
     async (req, res) => {
         //condition to check added here
         if (req.user.Username !== req.params.Username) {
