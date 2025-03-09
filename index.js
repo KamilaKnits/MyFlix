@@ -43,7 +43,7 @@ app.use(cors({
 }));
 
 app.get('/', (req, res) => {
-    res.send('Welcome to the MyFlix!');
+    res.send('Welcome to the Knitflix!');
 });
 
 // get list of all movies//
