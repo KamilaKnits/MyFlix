@@ -21,6 +21,7 @@ const mongoose = require('mongoose');
 mongoose.connect(process.env.CONNECTION_URI);
 
 
+
 app.use(morgan('combined', { stream: accessLogStream }));
 app.use(express.static('public'));
 app.use(express.json());
@@ -30,7 +31,7 @@ const passport = require('passport');
 
 
 
-const allowedOrigins = ['http://localhost:1234', 'https://mymovieflix-a3c1af20a30e.herokuapp.com', 'https://knitflix.netlify.app'];
+const allowedOrigins = ['http://localhost:1234', 'http://localhost:4200','https://mymovieflix-a3c1af20a30e.herokuapp.com', 'https://knitflix.netlify.app'];
 app.use(cors({
     origin: (origin, callback) => {
         if(!origin) return callback(null, true);
