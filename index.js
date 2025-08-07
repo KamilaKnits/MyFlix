@@ -31,13 +31,13 @@ const passport = require('passport');
 
 
 
-const allowedOrigins = ['http://localhost:1234', 'http://localhost:4200','https://mymovieflix-a3c1af20a30e.herokuapp.com', 'https://knitflix.netlify.app'];
+const allowedOrigins = ['http://localhost:1234', 'http://localhost:4200', 'https://mymovieflix-a3c1af20a30e.herokuapp.com', 'https://knitflix.netlify.app'];
 app.use(cors({
     origin: (origin, callback) => {
-        if(!origin) return callback(null, true);
-        if(allowedOrigins.indexOf(origin) === -1){//if a specific origin isn't found on the list of allowed origins
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) === -1) {//if a specific origin isn't found on the list of allowed origins
             let message = 'The CORS policy for this application does not allow access from origin ' + origin;
-            return callback(new Error(message), false) ; 
+            return callback(new Error(message), false);
         }
         return callback(null, true);
     }
@@ -104,6 +104,23 @@ app.get('/movies/directors/:director', passport.authenticate('jwt', { session: f
 
     });
 
+   //get user 
+
+    app.get('/users/:Username', passport.authenticate('jwt', { session: false }), async (req, res) => {
+        try {
+          const user = await Users.findOne({ Username: req.params.Username });
+          if (!user) {
+            return res.status(404).send('User not found');
+          }
+          res.json(user);
+        } catch (error) {
+          console.error(error);
+          res.status(500).send('Error: ' + error);
+        }
+      });
+      
+  
+
 //allow a new user to register // excluded Passport strategies here
 
 /* expect JSON in this format
@@ -125,7 +142,7 @@ app.post('/users',
         check('Password', 'Password is required').not().isEmpty(),
         check('Email', 'Email does not appear to be valid').isEmail()
     ],
-     
+
     async (req, res) => {
 
         //check for validation errors
@@ -182,7 +199,7 @@ app.put('/users/:Username',
     ],
     passport.authenticate('jwt', { session: false }),
     async (req, res) => {
-            //check for validation errors
+        //check for validation errors
         let errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(422).json({ errors: errors.array() });
