@@ -21,6 +21,33 @@ MyFlix API is the server-side backbone of the myFlix movie application. Built wi
 
 🧾 Delete user accounts
 
+# 📦 API Endpoints
+
+# 🔐 Authentication
+- POST /login — Log in and receive a JWT token
+
+# 🎬 Movies
+- GET /movies — Get all movies
+
+- GET /movies/:Title — Get movie by title
+
+- GET /movies/genre/:genre — Get genre info
+
+- GET /movies/directors/:director — Get director info
+
+#👤 Users
+- POST /users — Register a new user
+
+- GET /users/:Username — Get user profile
+
+- PUT /users/:Username — Update user profile
+
+- DELETE /users/:Username — Delete user account
+
+- POST /users/:Username/movies/:MovieId — Add favorite movie
+
+- DELETE /users/:Username/movies/:MovieId — Remove favorite movie
+
 # 🛠️ Technologies Used
 
 | Category | Stack |
