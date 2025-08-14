@@ -39,7 +39,7 @@ const passport = require('passport');
  */
 
 const allowedOrigins = ['http://localhost:1234', 'http://localhost:4200', 'https://mymovieflix-a3c1af20a30e.herokuapp.com', 
-    'https://knitflix.netlify.app', 'https://kamilaknits.github.io/myFlix-Angular-app/'];
+    'https://knitflix.netlify.app', 'https://kamilaknits.github.io/myFlix-Angular-client/'];
 app.use(cors({
     origin: (origin, callback) => {
         if (!origin) return callback(null, true);
