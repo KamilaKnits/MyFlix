@@ -31,15 +31,20 @@ app.use(morgan('combined', { stream: accessLogStream }));
 app.use(express.static('public'));
 app.use(express.json());
 
-let auth = require('./auth')(app);
-const passport = require('passport');
+
 
 /**
  * List of allowed origins to access the data
  */
 
-const allowedOrigins = ['http://localhost:1234', 'http://localhost:4200', 'https://mymovieflix-a3c1af20a30e.herokuapp.com', 
-    'https://knitflix.netlify.app', 'https://kamilaknits.github.io/myFlix-Angular-client/'];
+const allowedOrigins = [
+    'http://localhost:1234', 
+    'http://localhost:4200', 
+    'https://mymovieflix-a3c1af20a30e.herokuapp.com', 
+    'https://knitflix.netlify.app', 
+    'https://kamilaknits.github.io'
+];
+
 app.use(cors({
     origin: (origin, callback) => {
         if (!origin) return callback(null, true);
@@ -50,6 +55,9 @@ app.use(cors({
         return callback(null, true);
     }
 }));
+
+let auth = require('./auth')(app);
+const passport = require('passport');
 
 app.get('/', (req, res) => {
     res.send('Welcome to the Knitflix!');
